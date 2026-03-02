@@ -61,14 +61,6 @@ function Layout({ children }) {
     }
   }, [])
 
-  // 60s auto-save fallback — catches anything not covered by event triggers
-  useEffect(() => {
-    const interval = setInterval(() => {
-      autoSaveSession()
-    }, 60_000)
-    return () => clearInterval(interval)
-  }, [autoSaveSession])
-
   const {
     selectedStory,
     selectedImages,
@@ -86,6 +78,14 @@ function Layout({ children }) {
     loadProject,
     autoSaveSession,
   } = usePipelineStore()
+
+  // 60s auto-save fallback — catches anything not covered by event triggers
+  useEffect(() => {
+    const interval = setInterval(() => {
+      autoSaveSession()
+    }, 60_000)
+    return () => clearInterval(interval)
+  }, [autoSaveSession])
 
   const isRunning  = generationState === 'running'
   const isPaused   = generationState === 'paused'
